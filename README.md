@@ -122,5 +122,5 @@ mypy
 
 ## 📄 License
 MIT – See [LICENSE](LICENSE)
-**Built with ❤️ using LangChain ecosystem. Star if useful! ⭐**
+Star if useful! ⭐**
 
