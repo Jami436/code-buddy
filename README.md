@@ -121,7 +121,6 @@ mypy
 3. Follow PEP8.
 
 ## 📄 License
-MIT – See [LICENSE](LICENSE) (create if needed).
-
+MIT – See [LICENSE](LICENSE)
 **Built with ❤️ using LangChain ecosystem. Star if useful! ⭐**
 
