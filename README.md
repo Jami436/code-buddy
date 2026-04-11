@@ -19,7 +19,7 @@ Perfect for cleaning up messy scripts – try it on `sandbox/messy_script.py`!
 
 1. **Clone &amp; Setup Environment**:
    ```bash
-   git clone <your-repo> code-buddy
+  git clone https://github.com/Jami436/code-buddy.git code-buddy
    cd code-buddy
    python -m venv venv
    # Windows: venv\\Scripts\\activate
