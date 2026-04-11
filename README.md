@@ -18,6 +18,7 @@ Perfect for cleaning up messy scripts – try it on `sandbox/messy_script.py`!
 ## 🚀 Quick Start
 
 1. **Clone &amp; Setup Environment**:
+   ```bash
   git clone https://github.com/Jami436/code-buddy.git code-buddy
    cd code-buddy
    python -m venv venv
@@ -25,19 +26,19 @@ Perfect for cleaning up messy scripts – try it on `sandbox/messy_script.py`!
    # macOS/Linux: source venv/bin/activate
    ```
 
-2. **Install Dependencies**:
+3. **Install Dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Set API Key**:
+4. **Set API Key**:
    Create `.env`:
    ```
    GOOGLE_API_KEY=your_gemini_api_key_here
    ```
    Get key from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
-4. **Run the Agent**:
+5. **Run the Agent**:
    ```bash
    python main.py
    ```
