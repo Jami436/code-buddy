@@ -17,14 +17,13 @@ Perfect for cleaning up messy scripts – try it on `sandbox/messy_script.py`!
 
 ## 🚀 Quick Start
 
-1. **Clone &amp; Setup Environment**:
-   ```bash
-  git clone https://github.com/Jami436/code-buddy.git code-buddy
-   cd code-buddy
-   python -m venv venv
-   # Windows: venv\\Scripts\\activate
-   # macOS/Linux: source venv/bin/activate
-   ```
+1. **Clone & Setup Environment:**
+
+```bash
+    git clone https://github.com/Jami436/code-buddy.git
+    cd code-buddy
+    python -m venv venv
+```
 
 3. **Install Dependencies**:
    ```bash
