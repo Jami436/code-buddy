@@ -7,7 +7,7 @@
 
 Perfect for cleaning up messy scripts – try it on `sandbox/messy_script.py`!
 
-## ✨ Features
+## Features
 - **AI-Driven Refactoring**: Natural language queries like "Refactor messy_script.py, fix style issues, add types."
 - **Code Analysis Tools**: Integrated flake8 (style/syntax) and mypy (type checking).
 - **Sandbox File Ops**: List, read, write Python files in isolated `sandbox/`.
@@ -15,7 +15,7 @@ Perfect for cleaning up messy scripts – try it on `sandbox/messy_script.py`!
 - **Gemini 2.5 Flash**: Fast, cost-effective LLM integration.
 - **Easy Setup**: Virtualenv-ready, dotenv for API keys.
 
-## 🚀 Quick Start
+## Quick Start
 
 1. **Clone & Setup Environment:**
 
@@ -43,7 +43,7 @@ Perfect for cleaning up messy scripts – try it on `sandbox/messy_script.py`!
    ```
    It runs an example refactor on `sandbox/messy_script.py`!
 
-## 📖 Usage
+## Usage
 
 Edit the `user_query` in `main.py` for custom tasks:
 ```python
@@ -58,7 +58,7 @@ Example Output:
 Successfully wrote changes to messy_script.py.
 ```
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 main.py → agents/refactor_agent.py (create_react_agent)
@@ -76,7 +76,7 @@ main.py → agents/refactor_agent.py (create_react_agent)
 3. Reasons, generates fixed code.
 4. Writes back to sandbox file.
 
-## 🗂️ Sandbox Setup
+## Sandbox Setup
 
 - Place Python files in `sandbox/` (e.g., `messy_script.py`).
 - Agent auto-discovers `*.py` files.
@@ -87,7 +87,7 @@ Example messy code in `sandbox/messy_script.py`:
 x = 10  # Globals, no types, style issues → Agent fixes!
 ```
 
-## 🛠️ Tools
+## Tools
 
 | Tool | Description | Example |
 |------|-------------|---------|
@@ -97,7 +97,7 @@ x = 10  # Globals, no types, style issues → Agent fixes!
 | `run_flake8_analysis` | Runs flake8 linting | Errors or "No issues" |
 | `run_mypy_analysis` | Runs mypy type check | Type errors or "No issues" |
 
-## 📦 Requirements
+## Requirements
 
 Populated `requirements.txt` with:
 ```
@@ -108,19 +108,19 @@ flake8
 mypy
 ```
 
-## 🔮 Roadmap
+## Roadmap
 - [ ] Support more linters (pylint, black formatter).
 - [ ] Multi-language (JS, etc.).
 - [ ] Web UI for queries.
 - [ ] Git integration (commit changes).
 - [ ] More agents (e.g., test generator).
 
-## 🤝 Contributing
+## Contributing
 1. Fork &amp; PR.
 2. Add tools to `tools/`, update agent.
 3. Follow PEP8.
 
-## 📄 License
+## License
 MIT – See [LICENSE](LICENSE)
-Star if useful! ⭐**
+Star if useful! **
 
