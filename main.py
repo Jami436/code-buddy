@@ -1,26 +1,58 @@
+from rich.console import Console
+from rich.prompt import Prompt
+
 from agents.refactor_agent import create_code_agent
 
+from utils.banner import show_banner
+from utils.cli import show_help
+from utils.printer import print_response
+from utils.response_parser import extract_text
+
+console = Console()
+
+
 def main():
-    print("---Code Buddy Agent Live---")
+
+    show_banner()
+    show_help()
+
     agent = create_code_agent()
 
-    user_query = "Look at the files in my sandbox, find issues in messy_script.py, refactor it, and write the fixed code back to the file."
+    while True:
 
-    response = agent.invoke({
-        "messages": [{"role": "user", "content": user_query}]
-    })
+        query = Prompt.ask("\n[bold green]You[/bold green]")
 
-    last_message = response["messages"][-1].content
+        command = query.lower().strip()
 
-    print("---Agent's Final Report---")
-    if isinstance(last_message, list):
-        for block in last_message:
-            if isinstance(block, dict) and block.get("type") == "text":
-                print(block["text"])
-            elif isinstance(block, str):
-                print(block)
-    else:
-        print(last_message)
+        if command in {"/exit", "/quit", "exit", "quit"}:
+            console.print("\n Goodbye!")
+            break
+
+        if command == "/help":
+            show_help()
+            continue
+
+        if command == "/clear":
+            console.clear()
+            show_banner()
+            show_help()
+            continue
+
+        with console.status("[bold cyan]Thinking...[/bold cyan]"):
+
+            result = agent.invoke(
+                {
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": query,
+                        }
+                    ]
+                }
+            )
+
+        print_response(extract_text(result))
+
 
 if __name__ == "__main__":
     main()
