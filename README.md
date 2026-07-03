@@ -1,4 +1,4 @@
-# Code Buddy 🛠️ AI Code Refactor Agent
+# Code Buddy | AI Code Refactor Agent
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
 [![LangGraph](https://img.shields.io/badge/LangGraph-ReAct%20Agent-orange.svg)](https://langchain-ai.github.io/langgraph/)
