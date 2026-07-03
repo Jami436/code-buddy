@@ -7,6 +7,7 @@ from utils.banner import show_banner
 from utils.cli import show_help
 from utils.printer import print_response
 from utils.response_parser import extract_text
+from utils.errors import handle_exception
 
 console = Console()
 
@@ -18,10 +19,15 @@ def main():
 
     agent = create_code_agent()
 
+    config = {
+        "configurable": {
+            "thread_id": "default"
+        }
+    }
+
     while True:
 
         query = Prompt.ask("\n[bold green]You[/bold green]")
-
         command = query.lower().strip()
 
         if command in {"/exit", "/quit", "exit", "quit"}:
@@ -38,20 +44,26 @@ def main():
             show_help()
             continue
 
-        with console.status("[bold cyan]Thinking...[/bold cyan]"):
+        try:
 
-            result = agent.invoke(
-                {
-                    "messages": [
-                        {
-                            "role": "user",
-                            "content": query,
-                        }
-                    ]
-                }
-            )
+            with console.status("[bold cyan]Thinking...[/bold cyan]"):
 
-        print_response(extract_text(result))
+                result = agent.invoke(
+                    {
+                        "messages": [
+                            {
+                                "role": "user",
+                                "content": query,
+                            }
+                        ]
+                    },
+                    config=config
+                )
+
+            print_response(extract_text(result))
+
+        except Exception as e:
+            handle_exception(e)
 
 
 if __name__ == "__main__":
