@@ -1,12 +1,19 @@
 import os
 
-def list_sandbox_files(directory: str = 'sandbox') -> list:
-    """List all Python files in the sandbox directory."""
+def list_sandbox_files(directory: str = "sandbox") -> list[str]:
+    """
+    Return all Python files in the sandbox directory.
+    """
+
     try:
-        files = [f for f in os.listdir(directory) if f.endswith('.py')]
-        return files if files else "No Python files found in sandbox."
-    except Exception as e:
-        return f"Error accessing directory: {str(e)}"
+        return [
+            file
+            for file in os.listdir(directory)
+            if file.endswith(".py")
+        ]
+
+    except Exception:
+        return []
 
 def read_file_content(file_name: str, directory: str = 'sandbox') -> str:
     """Read and return the content of a specific Python file from the sandbox."""

@@ -4,12 +4,11 @@ console = Console()
 
 
 def show_help():
-    console.print(
-        """
-[bold cyan]Available Commands[/bold cyan]
+    """Display all available CLI commands."""
 
-[green]/help[/green]      Show help
-[green]/clear[/green]     Clear terminal
-[green]/exit[/green]      Exit Code Buddy
-"""
-    )
+    console.print("\n[bold cyan]Available Commands[/bold cyan]\n")
+
+    console.print("[green]/help[/green]      Show help")
+    console.print("[green]/files[/green]     List Python files in the sandbox")
+    console.print("[green]/clear[/green]     Clear terminal")
+    console.print("[green]/exit[/green]      Exit Code Buddy")
