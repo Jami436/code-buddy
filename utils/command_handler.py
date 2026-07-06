@@ -5,6 +5,7 @@ from rich.panel import Panel
 
 from utils.cli import show_help
 from utils.banner import show_banner
+from utils.command_result import CommandResult
 
 from tools.file_manager import (
     list_sandbox_files,
@@ -16,8 +17,9 @@ console = Console()
 
 class CommandHandler:
     """
-    Handles all built-in CLI commands.
-    Returns True if a command was handled.
+    Handles CLI commands.
+
+    Returns a CommandResult.
     """
 
     def __init__(self):
@@ -25,6 +27,7 @@ class CommandHandler:
             "/help": self.help_command,
             "/files": self.files_command,
             "/read": self.read_command,
+            "/analyze": self.analyze_command,
             "/clear": self.clear_command,
             "/exit": self.exit_command,
             "/quit": self.exit_command,
@@ -32,7 +35,7 @@ class CommandHandler:
             "quit": self.exit_command,
         }
 
-    def handle(self, command: str) -> bool:
+    def handle(self, command: str) -> CommandResult:
         command = command.strip()
 
         parts = command.split(maxsplit=1)
@@ -40,18 +43,19 @@ class CommandHandler:
         argument = parts[1] if len(parts) > 1 else ""
 
         if base_command in self.commands:
-            self.commands[base_command](argument)
-            return True
+            return self.commands[base_command](argument)
 
-        return False
+        return CommandResult(False)
 
     def help_command(self, _=""):
         show_help()
+        return CommandResult(True)
 
     def clear_command(self, _=""):
         console.clear()
         show_banner()
         show_help()
+        return CommandResult(True)
 
     def exit_command(self, _=""):
         console.print("\n👋 Goodbye!")
@@ -62,7 +66,7 @@ class CommandHandler:
 
         if not files:
             console.print("[yellow]No Python files found in the sandbox.[/yellow]")
-            return
+            return CommandResult(True)
 
         table = Table(title="Sandbox Files")
         table.add_column("File Name", style="cyan")
@@ -72,16 +76,18 @@ class CommandHandler:
 
         console.print(table)
 
+        return CommandResult(True)
+
     def read_command(self, filename=""):
         if not filename:
             console.print("[yellow]Usage: /read <filename>[/yellow]")
-            return
+            return CommandResult(True)
 
         content = read_file_content(filename)
 
         if content.startswith("Error"):
             console.print(f"[red]{content}[/red]")
-            return
+            return CommandResult(True)
 
         syntax = Syntax(
             content,
@@ -96,4 +102,44 @@ class CommandHandler:
                 title=filename,
                 border_style="cyan",
             )
+        )
+
+        return CommandResult(True)
+
+    def analyze_command(self, filename=""):
+        if not filename:
+            console.print("[yellow]Usage: /analyze <filename>[/yellow]")
+            return CommandResult(True)
+
+        content = read_file_content(filename)
+
+        if content.startswith("Error"):
+            console.print(f"[red]{content}[/red]")
+            return CommandResult(True)
+
+        prompt = f"""
+You are a senior Python software engineer.
+
+Analyze the following Python code.
+
+Focus on:
+- Bugs
+- Code smells
+- Readability
+- Performance
+- Security
+- Best practices
+
+Return a structured review.
+
+Filename:
+{filename}
+
+Code:
+{content}
+"""
+
+        return CommandResult(
+            handled=True,
+            ai_prompt=prompt,
         )

@@ -12,7 +12,6 @@ console = Console()
 
 
 def main():
-
     agent = create_code_agent()
     handler = CommandHandler()
 
@@ -23,20 +22,18 @@ def main():
     }
 
     while True:
-
         query = Prompt.ask("\n[bold green]You[/bold green]")
-        command = query.lower().strip()
 
         try:
-            if handler.handle(command):
-                continue
-        except SystemExit:
-            break
+            command_result = handler.handle(query)
 
-        try:
+            if command_result.handled:
+                if command_result.ai_prompt is None:
+                    continue
+
+                query = command_result.ai_prompt
 
             with console.status("[bold cyan]Thinking...[/bold cyan]"):
-
                 result = agent.invoke(
                     {
                         "messages": [
@@ -46,7 +43,7 @@ def main():
                             }
                         ]
                     },
-                    config=config
+                    config=config,
                 )
 
             print_response(extract_text(result))
