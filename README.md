@@ -1,126 +1,219 @@
-# Code Buddy | AI Code Refactor Agent
+# Code Buddy v2.0
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
-[![LangGraph](https://img.shields.io/badge/LangGraph-ReAct%20Agent-orange.svg)](https://langchain-ai.github.io/langgraph/)
+**Code Buddy** is an AI-powered software engineering assistant built with **Python**, **LangGraph**, and **Google Gemini**. It provides an interactive command-line interface that helps developers analyze, review, and refactor Python code using an LLM while keeping users in control of file modifications.
 
-**Code Buddy** is an AI-powered code analysis and refactoring agent built with [LangGraph](https://langchain-ai.github.io/langgraph/) ReAct agents and Google's Gemini LLM. It helps you identify issues in Python code (in the `sandbox/` directory), run linters (flake8, mypy), and automatically refactor files.
-
-Perfect for cleaning up messy scripts – try it on `sandbox/messy_script.py`!
+---
 
 ## Features
-- **AI-Driven Refactoring**: Natural language queries like "Refactor messy_script.py, fix style issues, add types."
-- **Code Analysis Tools**: Integrated flake8 (style/syntax) and mypy (type checking).
-- **Sandbox File Ops**: List, read, write Python files in isolated `sandbox/`.
-- **LangGraph ReAct Agent**: Tool-calling LLM agent for step-by-step reasoning.
-- **Gemini 2.5 Flash**: Fast, cost-effective LLM integration.
-- **Easy Setup**: Virtualenv-ready, dotenv for API keys.
 
-## Quick Start
+- Interactive AI-powered CLI
+- List Python files in the sandbox
+- Read files with syntax highlighting
+- AI code analysis
+- AI-powered code refactoring
+- Confirmation before overwriting files
+- Automatic `.bak` backup creation
+- Conversation memory using LangGraph
+- Rich terminal interface
 
-1. **Clone & Setup Environment:**
+---
+
+## Tech Stack
+
+- Python 3.13+
+- Google Gemini
+- LangGraph
+- LangChain
+- Rich
+- Python Dotenv
+- Flake8
+- Mypy
+
+---
+
+## Project Structure
+
+```
+code-buddy/
+│
+├── agents/
+│   └── refactor_agent.py
+│
+├── prompts/
+│   ├── analyze.py
+│   ├── refactor.py
+│   ├── review.py
+│   └── system_prompt.py
+│
+├── tools/
+│   ├── analyzer.py
+│   └── file_manager.py
+│
+├── utils/
+│   ├── banner.py
+│   ├── cli.py
+│   ├── command_handler.py
+│   ├── command_result.py
+│   ├── code_parser.py
+│   ├── errors.py
+│   ├── printer.py
+│   └── response_parser.py
+│
+├── sandbox/
+│
+├── main.py
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Installation
+
+Clone the repository
 
 ```bash
-    git clone https://github.com/Jami436/code-buddy.git
-    cd code-buddy
-    python -m venv venv
+git clone https://github.com/Jami436/code-buddy.git
+cd code-buddy
 ```
 
-3. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+Create a virtual environment
 
-4. **Set API Key**:
-   Create `.env`:
-   ```
-   GOOGLE_API_KEY=your_gemini_api_key_here
-   ```
-   Get key from [Google AI Studio](https://aistudio.google.com/app/apikey).
-
-5. **Run the Agent**:
-   ```bash
-   python main.py
-   ```
-   It runs an example refactor on `sandbox/messy_script.py`!
-
-## Usage
-
-Edit the `user_query` in `main.py` for custom tasks:
-```python
-user_query = "Your custom instruction here, e.g., Analyze sandbox files, fix messy_script.py bugs, improve structure."
+```bash
+python -m venv .venv
 ```
 
-Example Output:
-```
----Code Buddy Agent Live---
----Agent&#39;s Final Report---
-[Agent steps: lists files, analyzes with flake8/mypy, suggests/proposes refactors, writes fixed code]
-Successfully wrote changes to messy_script.py.
-```
+Activate it
 
-## Architecture
+### Windows
 
-```
-main.py → agents/refactor_agent.py (create_react_agent)
-          ↓
-       Tools:
-       - file_manager: list/read/write sandbox/*.py
-       - analyzer: flake8/mypy
-          ↓
-     Gemini LLM → ReAct Loop → Actions/Observations
+```bash
+.venv\Scripts\activate
 ```
 
-**Agent Flow**:
-1. User query → Agent plans (ReAct: Thought → Action → Observation).
-2. Calls tools (e.g., list files, run flake8).
-3. Reasons, generates fixed code.
-4. Writes back to sandbox file.
+### Linux / macOS
 
-## Sandbox Setup
-
-- Place Python files in `sandbox/` (e.g., `messy_script.py`).
-- Agent auto-discovers `*.py` files.
-- Safe: Isolated dir, overwrites only on write tool call.
-
-Example messy code in `sandbox/messy_script.py`:
-```python
-x = 10  # Globals, no types, style issues → Agent fixes!
+```bash
+source .venv/bin/activate
 ```
 
-## Tools
+Install dependencies
 
-| Tool | Description | Example |
-|------|-------------|---------|
-| `list_sandbox_files` | Lists all `*.py` in sandbox | `[\&#39;messy_script.py\&#39;]` |
-| `read_file_content` | Reads file content | Raw Python source |
-| `write_file_content` | Overwrites file with new code | `"Successfully wrote..."` |
-| `run_flake8_analysis` | Runs flake8 linting | Errors or "No issues" |
-| `run_mypy_analysis` | Runs mypy type check | Type errors or "No issues" |
-
-## Requirements
-
-Populated `requirements.txt` with:
+```bash
+pip install -r requirements.txt
 ```
-langchain-google-genai
-langgraph
-python-dotenv
-flake8
-mypy
+
+Create a `.env` file
+
+```env
+GOOGLE_API_KEY=YOUR_API_KEY
 ```
+
+Run the project
+
+```bash
+python main.py
+```
+
+---
+
+## Available Commands
+
+| Command | Description |
+|----------|-------------|
+| `/help` | Show available commands |
+| `/files` | List Python files inside the sandbox |
+| `/read <file>` | Display a Python file |
+| `/analyze <file>` | Analyze code using Gemini |
+| `/refactor <file>` | Refactor code with AI |
+| `/clear` | Clear the terminal |
+| `/exit` | Exit Code Buddy |
+
+---
+
+## Example
+
+```text
+You: /analyze messy_script.py
+
+Thinking...
+
+## Summary
+The code is functional but can be improved.
+
+Issues Found
+-------------
+• Variable names could be more descriptive
+• Missing type hints
+• Long functions
+• Minor code duplication
+
+Recommendations
+----------------
+• Add type hints
+• Improve readability
+• Split large functions
+```
+
+---
+
+## Refactoring Workflow
+
+```
+User
+   │
+   ▼
+Read Python File
+   │
+   ▼
+Generate AI Refactor
+   │
+   ▼
+Preview Result
+   │
+   ▼
+Apply Changes? (Y/N)
+   │
+   ├── Yes → Backup Original → Save Refactored File
+   │
+   └── No → Discard Changes
+```
+
+---
 
 ## Roadmap
-- [ ] Support more linters (pylint, black formatter).
-- [ ] Multi-language (JS, etc.).
-- [ ] Web UI for queries.
-- [ ] Git integration (commit changes).
-- [ ] More agents (e.g., test generator).
 
-## Contributing
-1. Fork &amp; PR.
-2. Add tools to `tools/`, update agent.
-3. Follow PEP8.
+### ✅ Version 2.0
+
+- Interactive CLI
+- AI Code Analysis
+- AI Code Refactoring
+- Rich Terminal UI
+- Prompt Management
+- Automatic Backups
+- LangGraph Memory
+
+### Version 2.1
+
+- Git Integration
+- Project-wide Analysis
+- Multi-file Refactoring
+- AI Code Review
+- Unit Test Generation
+- Documentation Generation
+
+---
+
+## Author
+
+**Muhammad Jami Ahad**
+
+AI Student | Backend Developer | Building AI-powered solutions
+
+GitHub: https://github.com/Jami436
+
+---
 
 ## License
-MIT – See [LICENSE](LICENSE)
-Star if useful! **
 
+This project is licensed under the MIT License.
