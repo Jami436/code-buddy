@@ -174,7 +174,7 @@ Preview Result
    ▼
 Apply Changes? (Y/N)
    │
-   ├── Yes → Backup Original → Save Refactored File
+   ├── Yes → Save Refactored File
    │
    └── No → Discard Changes
 ```
