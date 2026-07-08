@@ -12,6 +12,9 @@ from tools.file_manager import (
     read_file_content,
 )
 
+from prompts.analyze import build_analyze_prompt
+from prompts.refactor import build_refactor_prompt
+
 console = Console()
 
 
@@ -28,6 +31,7 @@ class CommandHandler:
             "/files": self.files_command,
             "/read": self.read_command,
             "/analyze": self.analyze_command,
+            "/refactor": self.refactor_command,
             "/clear": self.clear_command,
             "/exit": self.exit_command,
             "/quit": self.exit_command,
@@ -117,29 +121,34 @@ class CommandHandler:
             console.print(f"[red]{content}[/red]")
             return CommandResult(True)
 
-        prompt = f"""
-You are a senior Python software engineer.
-
-Analyze the following Python code.
-
-Focus on:
-- Bugs
-- Code smells
-- Readability
-- Performance
-- Security
-- Best practices
-
-Return a structured review.
-
-Filename:
-{filename}
-
-Code:
-{content}
-"""
+        prompt = build_analyze_prompt(
+            filename,
+            content,
+        )
 
         return CommandResult(
             handled=True,
             ai_prompt=prompt,
+        )
+
+    def refactor_command(self, filename=""):
+        if not filename:
+            console.print("[yellow]Usage: /refactor <filename>[/yellow]")
+            return CommandResult(True)
+        
+        content = read_file_content(filename)
+
+        if content.startswith("Error"):
+            console.print(f"[red]{content}[/red]")
+            return CommandResult(True)
+        
+        prompt = build_refactor_prompt(
+            filename,
+            content,
+        )
+
+        return CommandResult(
+            handled = True,
+            ai_prompt=prompt,
+            target_file=filename,
         )

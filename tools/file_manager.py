@@ -1,5 +1,7 @@
 import os
+import shutil
 
+# listing files
 def list_sandbox_files(directory: str = "sandbox") -> list[str]:
     """
     Return all Python files in the sandbox directory.
@@ -15,6 +17,7 @@ def list_sandbox_files(directory: str = "sandbox") -> list[str]:
     except Exception:
         return []
 
+# reading file content
 def read_file_content(file_name: str, directory: str = 'sandbox') -> str:
     """Read and return the content of a specific Python file from the sandbox."""
     try:
@@ -24,12 +27,29 @@ def read_file_content(file_name: str, directory: str = 'sandbox') -> str:
     except Exception as e:
         return f"Error reading file: {str(e)}"
 
-def write_file_content(file_name: str, content: str, directory: str = 'sandbox') -> str:
-    """Write the given content to a specific file in the sandbox, overwriting existing content."""
+# writing file content
+def write_file_content(
+    file_name: str,
+    content: str,
+    directory: str = "sandbox",
+) -> str:
+    """
+    Write content to a file in the sandbox.
+
+    If the file already exists, create a .bak backup before
+    overwriting it with the new content.
+    """
+
     try:
         path = os.path.join(directory, file_name)
-        with open(path, 'w') as f:
-            f.write(content)
-        return f"Successfully wrote changes to {file_name}."
+
+        if os.path.exists(path):
+            shutil.copy2(path, path + ".bak")
+
+        with open(path, "w", encoding="utf-8") as file:
+            file.write(content)
+
+        return f"Successfully updated {file_name}"
+
     except Exception as e:
-        return f"Error writing file: {str(e)}"
+        return f"Error writing file: {e}"
